@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -61,7 +61,7 @@ namespace TiendaOnline
             var ventasEnRango = new Dictionary<string, (int cantidad, double total)>();
             double totalVentas = 0;
 
-            foreach (var usuario in Program.manejoDeUsuarios.GetUsers().Where(u => u.Role == "cliente"))
+            foreach (var usuario in Program.manejoDeUsuarios.GetUsers().Where(u => u.Rol == "cliente"))
             {
                 var ventas = usuario.PurchaseHistory
                     .Where(p => p.date.Date >= fechaInicial.Date && p.date.Date <= fechaFinal.Date);
@@ -104,7 +104,7 @@ namespace TiendaOnline
 
             var ventasPorCategoria = new Dictionary<string, (int cantidad, double total)>();
 
-            foreach (var usuario in Program.manejoDeUsuarios.GetUsers().Where(u => u.Role == "cliente"))
+            foreach (var usuario in Program.manejoDeUsuarios.GetUsers().Where(u => u.Rol == "cliente"))
             {
                 foreach (var venta in usuario.PurchaseHistory)
                 {
