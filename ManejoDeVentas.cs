@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace TiendaOnline
@@ -19,6 +19,7 @@ namespace TiendaOnline
                 Console.WriteLine("3. Vaciar carrito");
                 Console.WriteLine("4. Finalizar compra");
                 Console.WriteLine("5. Volver al menú principal");
+                Console.WriteLine("6. Busqueda");
                 Console.Write("\nSeleccione una opción: ");
 
                 switch (Console.ReadLine())
@@ -40,6 +41,9 @@ namespace TiendaOnline
                         break;
                     case "5":
                         continuarComprando = false;
+                        break;
+                    case "6":
+                        BuscarProducto();
                         break;
                     default:
                         Console.WriteLine("Opción no válida.");
@@ -185,6 +189,36 @@ namespace TiendaOnline
             Console.ReadKey();
             return true;
         }
+
+        public void BuscarProducto()
+        {
+            Console.Clear();
+            Console.WriteLine("=== Búsqueda de Productos ===\n");
+            Console.Write("Ingrese el nombre del producto que necesita: ");
+            string nombreProducto = Console.ReadLine().ToLower();
+
+            var productosEncontrados = Program.inventario.GetAllProducts()
+                .Where(p => p.Nombre.ToLower().Contains(nombreProducto))
+                .ToList();
+
+            if (!productosEncontrados.Any())
+            {
+                Console.WriteLine("No se encontraron productos que coincidan con su búsqueda.");
+            }
+            else
+            {
+                Console.WriteLine("Productos encontrados:");
+                Console.WriteLine("Nombre".PadRight(20) + "Categoría".PadRight(15) + "Stock".PadRight(10) + "Precio");
+                Console.WriteLine(new string('-', 55));
+
+                foreach (var producto in productosEncontrados)
+                {
+                    Console.WriteLine($"{producto.Nombre.PadRight(20)}{producto.Categoria.PadRight(15)}{producto.Stock.ToString().PadRight(10)}${producto.Precio:F2}");
+                }
+            }
+            Console.ReadKey();
+        }
+
 
         public void MostrarHistorial(Usuario cliente)
         {
